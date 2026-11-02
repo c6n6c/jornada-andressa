@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#090811">
+<title>Uma jornada até o coração da Andressa</title>
+<style>
+:root{--bg:#090811;--panel:#171322;--pink:#f3a6c8;--pink2:#ffcee2;--muted:#c9b9c9;--gold:#f3d7a2}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#fff4fa;background:radial-gradient(ellipse at 50% 0%,#302038 0%,#120e1d 42%,#080810 100%);font-family:Georgia,'Times New Roman',serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1px 1px at 12% 18%,#fff 99%,transparent),radial-gradient(1px 1px at 78% 23%,#ffd7eb 99%,transparent),radial-gradient(1px 1px at 44% 65%,#fff 99%,transparent),radial-gradient(1px 1px at 88% 82%,#fff 99%,transparent),radial-gradient(1px 1px at 24% 88%,#ffd7eb 99%,transparent);background-size:260px 240px;opacity:.55}
+main{width:min(92%,520px);margin:0 auto;padding:34px 0 48px;position:relative;z-index:1}
+.screen{display:none;animation:rise .7s ease both}.screen.active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.kicker{text-transform:uppercase;letter-spacing:3px;font:11px Arial,sans-serif;color:var(--pink);text-align:center}
+h1,h2{text-align:center;font-weight:normal;line-height:1.2}
+h1{font-size:clamp(32px,8vw,46px);margin:18px 0}
+h2{font-size:29px;margin:12px 0}
+p{color:#eadce7;line-height:1.65;text-align:center;font-size:16px}
+.card{background:linear-gradient(145deg,rgba(35,25,45,.94),rgba(17,15,27,.94));border:1px solid rgba(243,166,200,.28);border-radius:22px;padding:24px 20px;box-shadow:0 18px 60px #0007;margin:20px 0}
+button{border:1px solid #f3a6c8;background:linear-gradient(135deg,#f3a6c8,#d979a9);color:#251321;border-radius:999px;padding:14px 22px;font-weight:bold;font-size:15px;cursor:pointer;min-height:48px;box-shadow:0 7px 24px #d979a933}
+button.secondary{background:#241b2e;color:#ffe6f1;border-color:#72516d}
+button:active{transform:scale(.98)}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.lily{font-size:48px;text-align:center;filter:drop-shadow(0 0 16px #f3a6c866);margin:8px}
+.progress{height:5px;background:#ffffff18;border-radius:10px;overflow:hidden;margin:22px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#d979a9,#ffe0ed);transition:width .4s}
+.heart-field{height:230px;position:relative;border-radius:18px;background:radial-gradient(ellipse,#39243c,#171322);overflow:hidden;margin:18px 0;border:1px solid #f3a6c833}
+.heart{position:absolute;border:0;background:transparent;box-shadow:none;font-size:35px;padding:4px;min-height:0;animation:float 2.2s ease-in-out infinite;filter:drop-shadow(0 0 10px #ff8fbe)}
+@keyframes float{50%{transform:translateY(-10px) rotate(8deg)}}
+.choices{display:grid;gap:11px;margin-top:20px}
+.choice{border:1px solid #78536e;background:#211a2c;color:#fff0f7;border-radius:15px;padding:16px;text-align:left;font:15px Georgia;line-height:1.4}
+.choice.selected{border-color:#ffb9d6;background:#38233a;box-shadow:0 0 0 2px #f3a6c833}
+.note{font:12px Arial,sans-serif;color:#bca9bb;text-align:center;margin-top:18px}
+#finalLetter{white-space:pre-line;text-align:left}
+.small{font-size:13px;color:#cbb9c8}
+</style>
+</head>
+<body>
+<main>
+  <section class="screen active" id="s0">
+    <div class="lily">✿</div><div class="kicker">uma pequena aventura feita à mão</div>
+    <h1>Uma jornada até<br><span style="color:#f3a6c8">o coração da Andressa</span></h1>
+    <div class="card">
+      <p>Oi, minha bebexinha. Preparei um cantinho só seu. Não é uma tentativa de apagar o que aconteceu, mas uma forma de demonstrar, com carinho, o quanto você é importante para mim.</p>
+      <p>Respire fundo, toque no botão e venha descobrir cada pedacinho dessa surpresa. ♡</p>
+      <div class="actions"><button onclick="go(1)">Começar a aventura</button></div>
+    </div>
+    <div class="note">feito com carinho, especialmente para você</div>
+  </section>
+
+  <section class="screen" id="s1">
+    <div class="kicker">fase 01 · procurando carinho</div><h2>Encontre os 3 corações</h2>
+    <p>Toque nos coraçõezinhos escondidos pelo jardim. Cada um guarda uma pequena mensagem.</p>
+    <div class="progress"><span id="bar1"></span></div>
+    <div class="card"><p id="heartCount">Corações encontrados: 0 de 3</p><div class="heart-field" id="field"></div><p id="heartMessage" class="small">Eles estão escondidos por aqui...</p></div>
+    <div class="actions"><button id="next1" disabled onclick="go(2)">Continuar</button></div>
+  </section>
+
+  <section class="screen" id="s2">
+    <div class="kicker">fase 02 · coisas que admiro</div><h2>Um pouquinho sobre você</h2>
+    <p>Toque em cada flor para revelar uma das coisas bonitas que vejo em você.</p>
+    <div class="card">
+      <div class="choices">
+        <button class="choice" onclick="reveal(this,'Admiro seu jeito único de ser. Você tem uma maneira só sua de deixar os meus dias diferentes.')">🌷 Uma flor para abrir</button>
+        <button class="choice" onclick="reveal(this,'Admiro sua força, inclusive nos dias em que talvez você mesma não perceba o quanto é forte.')">🌷 Outra flor para abrir</button>
+        <button class="choice" onclick="reveal(this,'Admiro os detalhes que fazem você ser você: seu jeito, seu sorriso, suas manias e até suas pequenas brincadeiras.')">🌷 A última flor</button>
+      </div>
+      <p id="flowerText" aria-live="polite">As mensagens vão aparecer aqui.</p>
+    </div>
+    <div class="actions"><button onclick="go(3)">Ir para a próxima fase</button></div>
+  </section>
+
+  <section class="screen" id="s3">
+    <div class="kicker">fase 03 · uma escolha importante</div><h2>O que faz uma relação ficar mais forte?</h2>
+    <p>Não existe resposta mágica. Escolha o que você acredita que merece estar presente entre duas pessoas que se amam.</p>
+    <div class="card">
+      <div class="choices">
+        <button class="choice" onclick="promise(this)">♡ Ouvir de verdade, inclusive quando é difícil.</button>
+        <button class="choice" onclick="promise(this)">♡ Reconhecer os erros e demonstrar mudanças com atitudes.</button>
+        <button class="choice" onclick="promise(this)">♡ Ter carinho, respeito, paciência e parceria todos os dias.</button>
+      </div>
+      <p id="promiseText" aria-live="polite">Escolha uma opção para abrir a última surpresa.</p>
+    </div>
+    <div class="actions"><button id="next3" disabled onclick="go(4)">Desbloquear surpresa</button></div>
+  </section>
+
+  <section class="screen" id="s4">
+    <div class="lily">✿</div><div class="kicker">uma mensagem do meu coração</div><h2>Para minha bebexinha</h2>
+    <div class="card"><p id="finalLetter">Andressa, minha bebexinha linda,
+
+Eu quero te pedir desculpas de coração por ter te machucado. Sei que minhas atitudes tiveram consequências e não quero diminuir o que você sentiu, nem esperar que uma mensagem resolva tudo.
+
+Você é uma pessoa incrível e merece ser tratada com carinho, respeito e consideração. Admiro muito quem você é, seu jeito, sua essência e os detalhes que fazem você ser tão especial.
+
+Eu quero aprender com esse erro e mostrar, nas minhas atitudes, que posso cuidar melhor dos seus sentimentos. Não quero te prometer perfeição, quero me comprometer a ouvir, reconhecer quando eu errar e fazer melhor.
+
+Obrigado por ser essa pessoa tão especial na minha vida. Eu te amo, minha princesa. ♡</p>
+      <div class="actions"><button onclick="showFinal()">Abrir a última surpresa ✨</button></div>
+    </div>
+    <div id="last" style="display:none" class="card">
+      <div class="lily">♡ ✿ ♡</div>
+      <h2 style="color:#ffd2e5">Você é única, Andressa.</h2>
+      <p>Minha próxima missão não é ganhar um jogo. É continuar aprendendo a te fazer sorrir, respeitar seu coração e construir momentos bonitos ao seu lado, um dia de cada vez.</p>
+      <p style="color:#f3a6c8;font-size:22px">Eu te amo, minha bebexinha. ♡</p>
+      <div class="actions"><button class="secondary" onclick="restart()">Jogar novamente</button></div>
+    </div>
+    <div class="note">fim da aventura · mas não do carinho</div>
+  </section>
+</main>
+<script>
+let found=0, flowers=0, selectedPromise=false;
+function go(n){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(n===1)initHearts()}
+function initHearts(){
+ const field=document.getElementById('field');if(field.dataset.ready)return;field.dataset.ready='1';
+ const positions=[[12,18],[69,28],[42,67]];
+ positions.forEach((p,i)=>{let b=document.createElement('button');b.className='heart';b.textContent='♡';b.style.left=p[0]+'%';b.style.top=p[1]+'%';b.setAttribute('aria-label','Encontrar coração');b.onclick=()=>{if(b.disabled)return;b.disabled=true;b.textContent='💗';found++;document.getElementById('heartCount').textContent=`Corações encontrados: ${found} de 3`;document.getElementById('bar1').style.width=(found/3*100)+'%';document.getElementById('heartMessage').textContent=['Um coração para lembrar que você merece carinho.','Outro para lembrar que sua felicidade importa.','E o último para dizer que você é muito especial.'][i];if(found===3)document.getElementById('next1').disabled=false};field.appendChild(b)});
+}
+function reveal(btn,msg){if(btn.classList.contains('selected'))return;btn.classList.add('selected');btn.textContent='🌸 Mensagem descoberta';flowers++;document.getElementById('flowerText').textContent=msg;if(flowers===3)document.getElementById('flowerText').textContent+=' ♡'}
+function promise(btn){document.querySelectorAll('#s3 .choice').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');document.getElementById('promiseText').textContent='Essa é uma escolha bonita. Que a gente nunca deixe de praticar isso. ♡';document.getElementById('next3').disabled=false;selectedPromise=true}
+function showFinal(){document.getElementById('last').style.display='block';document.getElementById('last').scrollIntoView({behavior:'smooth',block:'center'})}
+function restart(){found=0;flowers=0;selectedPromise=false;document.getElementById('field').dataset.ready='';document.getElementById('field').innerHTML='';document.getElementById('next1').disabled=true;document.getElementById('bar1').style.width='0';document.getElementById('heartCount').textContent='Corações encontrados: 0 de 3';document.getElementById('heartMessage').textContent='Eles estão escondidos por aqui...';document.querySelectorAll('#s2 .choice').forEach((b,i)=>{b.classList.remove('selected');b.textContent=['🌷 Uma flor para abrir','🌷 Outra flor para abrir','🌷 A última flor'][i]});document.getElementById('flowerText').textContent='As mensagens vão aparecer aqui.';document.querySelectorAll('#s3 .choice').forEach(b=>b.classList.remove('selected'));document.getElementById('promiseText').textContent='Escolha uma opção para abrir a última surpresa.';document.getElementById('next3').disabled=true;document.getElementById('last').style.display='none';go(0)}
+</script>
+</body></html>
